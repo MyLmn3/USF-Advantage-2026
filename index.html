@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="USF Advantage 2026 — the master directory of student discounts, deals, and campus resources for USF students in Tampa.">
+
+    <!-- Mobile Web App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="USF Advantage">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b1a14">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%82%3C/text%3E%3C/svg%3E">
+
+    <title>USF Advantage 2026: Master Database</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        :root {
+            --usf-green: #005A3C;
+            --usf-gold: #D4C571;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-glow: rgba(212, 197, 113, 0.2);
+            --text-light: #F4F6F8;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            background-color: #0b1a14;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(158, 100%, 15%, 1) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, hsla(50, 40%, 25%, 1) 0, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Top Navigation / Header Area */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 40px 50px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .brand-section h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #ffffff, var(--usf-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        
+        .brand-section p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Search & Toggle Box */
+        .search-container-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .mode-toggle-group {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 3px;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .toggle-btn.active {
+            background: var(--usf-gold);
+            color: #000;
+            box-shadow: 0 0 10px var(--glass-glow);
+        }
+
+        .search-pill {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            padding: 5px 5px 5px 20px;
+            width: 330px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .search-pill:focus-within {
+            border-color: var(--usf-gold);
+            box-shadow: 0 0 15px var(--glass-glow);
+            background: rgba(255, 255, 255, 0.12);
+            width: 380px;
+        }
+
+        .search-pill input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .search-pill input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-pill button {
+            background: var(--usf-green);
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-left: 5px;
+        }
+
+        .search-pill button:hover {
+            background: #00452e;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(212, 197, 113, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px 50px;
+        }
+
+        /* Main Category Controls */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .bubble-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .bubble {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .bubble:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .bubble.active {
+            background: var(--usf-gold);
+            color: #000;
+            border-color: var(--usf-gold);
+            box-shadow: 0 0 15px var(--glass-glow);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+            gap: 25px;
+        }
+
+        .perk-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(212, 197, 113, 0.5);
+        }
+
+        .category-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--usf-gold);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95rem;
+        }
+        .info-row strong {
+            min-width: 80px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+        .info-row span {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .click-hint {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            text-align: right;
+            color: var(--usf-gold);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .perk-card:hover .click-hint {
+            opacity: 1;
+        }
+
+        /* Modal / Glass Bubble Pop-Up */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .glass-modal {
+            background: rgba(30, 45, 55, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            transform: translateY(40px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .glass-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            padding: 10px;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .modal-category {
+            color: var(--usf-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .modal-details {
+            background: rgba(0,0,0,0.25);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-details p {
+            margin: 12px 0;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .modal-details strong {
+            color: rgba(255,255,255,0.6);
+            display: inline-block;
+            width: 100px;
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--usf-green);
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #00452e;
+            border-color: var(--usf-gold);
+            box-shadow: 0 0 20px rgba(212, 197, 113, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .highlight-text {
+            color: var(--usf-gold);
+            font-weight: 600;
+        }
+
+        .empty-search-btn {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        #emptyState {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.6);
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px dashed rgba(255,255,255,0.3);
+            display: none;
+        }
+        
+        #emptyState p {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 850px) {
+            body, html { background-attachment: scroll; }
+            .top-nav { flex-direction: column; align-items: center; gap: 20px; padding: 40px 20px 20px; text-align: center; }
+            .search-container-box { align-items: center; width: 100%; }
+            .container { padding: 0 20px 40px; }
+            .search-pill { width: 100%; max-width: 400px; }
+            .search-pill:focus-within { width: 100%; max-width: 400px; }
+            h1 { font-size: 2.2rem !important; }
+            .glass-modal { padding: 30px 20px; }
+            .modal-title { font-size: 1.6rem; }
+        }
+
+        @media (max-width: 420px) {
+            .brand-section h1 { font-size: 1.8rem !important; }
+            .brand-section p { font-size: 0.95rem; }
+            .mode-toggle-group { width: 100%; justify-content: center; }
+            .toggle-btn { flex: 1; }
+            .glass-panel { padding: 18px; }
+            .perk-card { padding: 20px; }
+            .results-grid { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <div class="brand-section">
+            <h1>USF Advantage 2026</h1>
+            <p>The Master Local & Online Student Directory</p>
+        </div>
+        
+        <div class="search-container-box">
+            <!-- Mode Toggle -->
+            <div class="mode-toggle-group" role="group" aria-label="Search mode">
+                <button class="toggle-btn active" id="modePerks" aria-pressed="true">🎓 Find Deals</button>
+                <button class="toggle-btn" id="modeNeedIt" aria-pressed="false">📍 Need It Now</button>
+            </div>
+
+            <!-- Input Pill -->
+            <div class="search-pill">
+                <label for="searchInput" class="sr-only">Search deals and resources</label>
+                <input type="search" id="searchInput" placeholder="Search app, or tap 🔍 for deals..." enterkeyhint="search" autocomplete="off">
+                <button id="searchBtn" title="Execute Search" aria-label="Run web search">🔍</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="glass-panel">
+            <div class="bubble-filters" id="bubbleFilters" role="group" aria-label="Filter by category">
+                <div class="bubble active" data-category="All">All Resources</div>
+            </div>
+        </div>
+
+        <div class="results-grid" id="resultsGrid">
+        </div>
+        
+        <!-- Enhanced Empty State -->
+        <div id="emptyState">
+            <p>No local deals found in app for that item.</p>
+            <button class="action-btn empty-search-btn" id="emptySearchBtn">Search Nearest Stores 🔍</button>
+        </div>
+    </div>
+
+    <!-- Modal / Glass Bubble Popup -->
+    <div class="modal-overlay" id="perkModal">
+        <div class="glass-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="close-btn" id="closeModal" aria-label="Close">✕</button>
+            <span class="modal-category" id="modalCategory">Category</span>
+            <h2 class="modal-title" id="modalTitle">Opportunity Title</h2>
+            
+            <div class="modal-details">
+                <p><strong>Cost:</strong> <span id="modalCost" class="highlight-text">$0</span></p>
+                <p><strong>Eligibility:</strong> <span id="modalEligibility">Active Student</span></p>
+                <p><strong>Action:</strong> <span id="modalAction">How to get it</span></p>
+            </div>
+            
+            <a href="#" target="_blank" rel="noopener noreferrer" class="action-btn" id="modalLink">Access Resource ↗</a>
+        </div>
+    </div>
+
+    <noscript>
+        <p style="text-align:center; padding:40px; color:#fff; font-family:sans-serif;">
+            This directory needs JavaScript enabled to display deals. Please enable JavaScript in your browser.
+        </p>
+    </noscript>
+
+    <script>
+        // MASSIVE EXHAUSTIVE DATABASE ARRAY WITH "HEAVY HITTERS" & FULL BULLS COUNTRY LIST
+        const perksData = [
+            // AUTOMOTIVE & CAR CARE
+            {"opportunity": "Pep Boys (Tires & Auto Repair)", "category": "Automotive & Car Care", "cost": "10% off", "eligibility": "College ID", "how_to_get_it": "Show your valid USF ID at checkout for 10% off parts, service, and tires.", "link": "https://www.pepboys.com/sale-specials-coupons"},
+            {"opportunity": "Pep Boys Free Towing", "category": "Automotive & Car Care", "cost": "$0", "eligibility": "General Public / Students", "how_to_get_it": "Free towing directly to their Tampa locations if they do the repair.", "link": "https://www.pepboys.com/sale-specials-coupons"},
+            {"opportunity": "Parks Lincoln of Tampa", "category": "Automotive & Car Care", "cost": "Special Pricing", "eligibility": "USF Student / Staff", "how_to_get_it": "Official USF partner offering special vehicle incentives and free on-site mobile service.", "link": "https://www.lincolnoftampa.com/university-of-south-florida-partnership.html"},
+            {"opportunity": "Provident Credit Union Auto Loans", "category": "Automotive & Car Care", "cost": "0.125% Rate Drop", "eligibility": "USF Student / Alumni", "how_to_get_it": "Mention USF when applying to receive a discount on your auto loan interest rate.", "link": "https://providentcu.org/usf/usf-auto-loan-discount"},
+            {"opportunity": "Ice Cold Air Discount Auto", "category": "Automotive & Car Care", "cost": "10% - 40% Off", "eligibility": "College Student / Promo", "how_to_get_it": "Local mechanic offering discounts on brakes, A/C checks, and oil changes via digital coupons.", "link": "https://www.icecoldair.com/"},
+
+            // TECH & SOFTWARE
+            {"opportunity": "Autodesk Education Suite", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "Access to AutoCAD, Maya, and Revit completely free (normally thousands of dollars).", "link": "https://www.autodesk.com/education/edu-software/"},
+            {"opportunity": "Figma Professional", "category": "Technology & Software", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Free premium Professional tier for students (normally $144/year).", "link": "https://www.figma.com/education/"},
+            {"opportunity": "YNAB (You Need A Budget)", "category": "Technology & Software", "cost": "$0", "eligibility": "College Student", "how_to_get_it": "Get the gold-standard budgeting app completely free for your first year.", "link": "https://www.ynab.com/college/"},
+            {"opportunity": "Microsoft Office 365", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "Log into USF Software Catalog for Word, Excel, PowerPoint on 5 devices.", "link": "https://software.usf.edu/all-software"},
+            {"opportunity": "Adobe Creative Cloud", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "software.usf.edu -> 'Special Request' for full CC suite.", "link": "https://software.usf.edu/all-software"},
+            {"opportunity": "GitHub Student Developer Pack", "category": "Technology & Software", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Sign up with @usf.edu email (Includes free Canva Pro for 12 months).", "link": "https://education.github.com/pack"},
+
+            // STREAMING & SUBSCRIPTIONS
+            {"opportunity": "NYT & Wall Street Journal", "category": "Streaming & Subscriptions", "cost": "$0", "eligibility": "USF Student", "how_to_get_it": "Bypass the paywalls! Get full digital access for free through the USF Library portal.", "link": "https://lib.usf.edu/"},
+            {"opportunity": "Spotify Premium + Hulu", "category": "Streaming & Subscriptions", "cost": "$6.99/mo", "eligibility": "Active USF student", "how_to_get_it": "Verify via SheerID on Spotify (Includes Showtime for some legacy users).", "link": "https://www.spotify.com/us/student/"},
+            {"opportunity": "Apple Music + Apple TV+", "category": "Streaming & Subscriptions", "cost": "$6.99/mo", "eligibility": "Active USF student", "how_to_get_it": "Verify via UNiDAYS for discounted music & free Apple TV+.", "link": "https://offers.applemusic.apple/student-offer"},
+            {"opportunity": "Amazon Prime Student", "category": "Streaming & Subscriptions", "cost": "6 Mos. $0", "eligibility": "Active USF student", "how_to_get_it": "Sign up using @usf.edu email for 6 months free, then half price.", "link": "https://www.amazon.com/Amazon-Student/"},
+
+            // CAMPUS & USF RESOURCES
+            {"opportunity": "Suit-A-Bull", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "USF Student", "how_to_get_it": "Borrow professional business attire completely free for job interviews and career fairs.", "link": "https://www.usf.edu/career-services/students/suit-a-bull.aspx"},
+            {"opportunity": "USF Free Printing", "category": "Campus & USF Resources", "cost": "$0 (Up to $3/day)", "eligibility": "Active student", "how_to_get_it": "First $3.00 of prints free every single day at SG Computer Services lab (MSC 1308).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/sg-computer-services.aspx"},
+            {"opportunity": "USF TimelyCare (TalkNow)", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "Enrolled student", "how_to_get_it": "Free 24/7 on-demand tele-therapy and mental health support without copays.", "link": "https://www.usf.edu/student-affairs/student-health-services/services/timelycare.aspx"},
+            {"opportunity": "USF RecWell Facilities", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Swipe/Scan USF ID for massive campus gyms, indoor/outdoor pools, and fitness.", "link": "https://www.usf.edu/student-affairs/campus-rec/"},
+            {"opportunity": "Feed-A-Bull Food Pantry", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "USF student", "how_to_get_it": "Visit at Student Health Center for free supplemental groceries and food items.", "link": "https://www.usf.edu/student-affairs/student-health-services/services/feed-a-bull-food-pantry.aspx"},
+
+            // CULTURE & EDUCATION
+            {"opportunity": "Tampa Museum of Art", "category": "Culture & Education", "cost": "$0", "eligibility": "College Student", "how_to_get_it": "100% free admission. Just present your valid USF ID at the front desk.", "link": "https://tampamuseum.org/"},
+            {"opportunity": "The Ringling Museum", "category": "Culture & Education", "cost": "$14 (Or Free)", "eligibility": "College Student", "how_to_get_it": "Heavily discounted $14 entry, or completely FREE admission on Mondays.", "link": "https://www.ringling.org/"},
+            {"opportunity": "Tampa Theatre", "category": "Culture & Education", "cost": "Discounted", "eligibility": "College Student", "how_to_get_it": "Show your ID at the box office for discounted tickets to classic films at the historic theater.", "link": "https://tampatheatre.org/"},
+            {"opportunity": "Busch Gardens USF Fun Card", "category": "Culture & Education", "cost": "$50 / Discounted", "eligibility": "USF Student", "how_to_get_it": "Present ID at ticket window for a massively discounted annual pass.", "link": "https://buschgardens.com/tampa/special-offers/college-offer/"},
+
+            // SPORTS, GOLF & RECREATION
+            {"opportunity": "GolfPass Student (GolfNow)", "category": "Sports, Golf & Recreation", "cost": "$59/yr", "eligibility": "College Student", "how_to_get_it": "Waived booking fees on GolfNow, $10/mo tee time credits, & Peacock Premium.", "link": "https://www.golfpass.com/student"},
+            {"opportunity": "First Tee Tampa Bay Card", "category": "Sports, Golf & Recreation", "cost": "$10/year", "eligibility": "Age 18-22", "how_to_get_it": "The Holy Grail of golf: Unlocks $1 golf rounds & $1 range balls at Rogers Park.", "link": "https://firstteetampabay.org/programs/membership-cards/"},
+            {"opportunity": "Topgolf Tampa College Night", "category": "Sports, Golf & Recreation", "cost": "50% Off", "eligibility": "College Student", "how_to_get_it": "Half-price gameplay every Wednesday night. Just show your USF ID.", "link": "https://topgolf.com/us/tampa/"},
+            {"opportunity": "USF Riverfront Park", "category": "Sports, Golf & Recreation", "cost": "$5 Rentals", "eligibility": "USF Student", "how_to_get_it": "Free entry and highly discounted kayak, canoe, and paddleboard rentals (just $5).", "link": "https://www.usf.edu/student-affairs/campus-rec/outdoor-recreation/riverfront-park.aspx"},
+            {"opportunity": "USF Student Ticket Central", "category": "Sports, Golf & Recreation", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Claim free USF football & basketball tickets via app.", "link": "https://gousfbulls.com/sports/2018/8/16/student-tickets-and-information"},
+            {"opportunity": "Tampa Bay Lightning Student Rush", "category": "Sports, Golf & Recreation", "cost": "$15 - $20", "eligibility": "College Student", "how_to_get_it": "Text alerts at 10 AM game days for dirt-cheap SRO/Lower level tickets.", "link": "https://www.gofevo.com/group/TBL25Rush"},
+
+            // FOOD & RESTAURANTS
+            {"opportunity": "Chewy Boba Company", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Chicken Salad Chick", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off dine-in and take-out.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Cici's Pizza", "category": "Food & Restaurants", "cost": "Free Drink", "eligibility": "USF ID", "how_to_get_it": "Free drink with buffet purchase.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Cold Stone Creamery", "category": "Food & Restaurants", "cost": "25% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Culvers", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Dunkin'", "category": "Food & Restaurants", "cost": "5% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Edible Arrangements", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Fuzzy's Taco Shop", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Inspire House Nutrition", "category": "Food & Restaurants", "cost": "15% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Jersey Mike's Subs", "category": "Food & Restaurants", "cost": "$7.99 Regular Sub", "eligibility": "USF ID", "how_to_get_it": "Any regular sub for $7.99.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Portillo's", "category": "Food & Restaurants", "cost": "Free Fries", "eligibility": "Wear Bulls gear", "how_to_get_it": "Free Fries Fridays when in Bulls Gear.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Qdoba Mexican Eats", "category": "Food & Restaurants", "cost": "$1.25 Drink", "eligibility": "USF ID", "how_to_get_it": "$1.25 drink specials.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "South Tampa Pizza", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off on purchases, no minimum needed.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Taco Bus", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Which Wich", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "So Fresh", "category": "Food & Restaurants", "cost": "7.5% - 10% Off", "eligibility": "USF ID", "how_to_get_it": "7.5% off standard, 10% off catering orders $100+.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Speakeasy Kava", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "Promo Code", "how_to_get_it": "10% off all teas with code Bula.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "The Hot Spot Nutrition Club", "category": "Food & Restaurants", "cost": "$2 Off", "eligibility": "USF ID", "how_to_get_it": "$2 off all combos.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "The Hangar Restaurant", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off food & drinks.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Dunns River Island Cafe", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off Mon–Sat 11AM–9PM (excludes seafood/oxtail/goat).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Yummy Chicken", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off all fried chicken items.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Aussie Grill", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off dine-in, take-out, or drive-thru.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+
+            // TRANSPORTATION & TRAVEL
+            {"opportunity": "PSTA Beach Buses (U-Pass)", "category": "Transportation & Travel", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Ride buses all the way to St. Pete Beach completely free by showing your USF ID.", "link": "https://psta.net/programs/upass/"},
+            {"opportunity": "Amtrak Student Discount", "category": "Transportation & Travel", "cost": "15% off", "eligibility": "College Student", "how_to_get_it": "15% off national rail fares. Must book at least one day in advance.", "link": "https://www.amtrak.com/student-discounts"},
+            {"opportunity": "Bull Runner Buses", "category": "Transportation & Travel", "cost": "$0", "eligibility": "Valid USFCard", "how_to_get_it": "Swipe/Show ID when boarding.", "link": "https://www.usf.edu/administrative-services/parking/transit/index.aspx"},
+            {"opportunity": "Brightline Trains (Florida)", "category": "Transportation & Travel", "cost": "25% off", "eligibility": "College Student", "how_to_get_it": "25% off SMART fares; Register via .edu email.", "link": "https://www.gobrightline.com/offers/student-discount"},
+
+            // SHOPPING, LIFESTYLE & WELLNESS
+            {"opportunity": "Orange Theory Fitness", "category": "Shopping, Lifestyle & Wellness", "cost": "$10 Off", "eligibility": "USF ID", "how_to_get_it": "$10 Off Monthly Memberships.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Nails at New Tampa", "category": "Shopping, Lifestyle & Wellness", "cost": "15% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Zen Life Naturals", "category": "Shopping, Lifestyle & Wellness", "cost": "25% Off", "eligibility": "Promo Code", "how_to_get_it": "25% off site-wide with code ZENLIFEUSF25.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Central Cycling", "category": "Shopping, Lifestyle & Wellness", "cost": "$39 first month", "eligibility": "USF ID", "how_to_get_it": "$39 for first month (reg. $95).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Curves", "category": "Shopping, Lifestyle & Wellness", "cost": "66% Off", "eligibility": "USF ID", "how_to_get_it": "66% off service fee and monthly discount.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Evolution Medical Associates", "category": "Shopping, Lifestyle & Wellness", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off a one-hour acupuncture session.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Krav Maga Martial Arts", "category": "Shopping, Lifestyle & Wellness", "cost": "25% Off", "eligibility": "USF ID", "how_to_get_it": "25% off initial membership + no money down.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "The Bay Spa Tampa", "category": "Shopping, Lifestyle & Wellness", "cost": "$20 Off", "eligibility": "First Time Student", "how_to_get_it": "$20 off any service for first time student clients.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
+            {"opportunity": "Great Clips (Tampa Palms)", "category": "Shopping, Lifestyle & Wellness", "cost": "~$13 Haircuts", "eligibility": "USF ID", "how_to_get_it": "Show USF ID for a heavily discounted student rate at the Tampa Palms location.", "link": "https://www.greatclips.com/"},
+            {"opportunity": "Hasan'z Barbershop", "category": "Shopping, Lifestyle & Wellness", "cost": "Student Rate", "eligibility": "USF ID", "how_to_get_it": "Ask for the USF student discount at checkout. A staple USF barber.", "link": "https://www.instagram.com/hasanzbarbershop/"},
+            {"opportunity": "Oxygen Barbershop", "category": "Shopping, Lifestyle & Wellness", "cost": "Discounted", "eligibility": "USF ID", "how_to_get_it": "Ask for the specific USF student discount at the register.", "link": "https://booksy.com/en-us/11261_oxygen-barbershop_barber-shop_15496_tampa"},
+            {"opportunity": "Best Buy Student Hub", "category": "Shopping, Lifestyle & Wellness", "cost": "Varies", "eligibility": "College Student", "how_to_get_it": "Sign up for Member Deals to get massive hidden discounts on laptops and tech.", "link": "https://www.bestbuy.com/site/back-to-school/college-student-deals/pcmcat276200050000.c"},
+
+            // STUDENT VERIFICATION KEYS
+            {"opportunity": "UNiDAYS Account", "category": "Student Verification Keys", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Register with @usf.edu email for Apple, ASOS, Nike, etc.", "link": "https://www.myunidays.com/"},
+            {"opportunity": "ID.me Account", "category": "Student Verification Keys", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Link university records to unlock discounts at checkout.", "link": "https://shop.id.me/student"}
+        ];
+        
+        const resultsGrid = document.getElementById('resultsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const emptySearchBtn = document.getElementById('emptySearchBtn');
+        const bubbleContainer = document.getElementById('bubbleFilters');
+        const emptyState = document.getElementById('emptyState');
+        const modePerksBtn = document.getElementById('modePerks');
+        const modeNeedItBtn = document.getElementById('modeNeedIt');
+
+        // Modal Elements
+        const modalOverlay = document.getElementById('perkModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const mTitle = document.getElementById('modalTitle');
+        const mCategory = document.getElementById('modalCategory');
+        const mCost = document.getElementById('modalCost');
+        const mEligibility = document.getElementById('modalEligibility');
+        const mAction = document.getElementById('modalAction');
+        const mLink = document.getElementById('modalLink');
+
+        let activeCategory = 'All';
+        let currentSearchMode = 'perks'; // 'perks' or 'needit'
+
+        // Mode Toggle Buttons Logic
+        modePerksBtn.addEventListener('click', () => {
+            modePerksBtn.classList.add('active');
+            modeNeedItBtn.classList.remove('active');
+            modePerksBtn.setAttribute('aria-pressed', 'true');
+            modeNeedItBtn.setAttribute('aria-pressed', 'false');
+            currentSearchMode = 'perks';
+            searchInput.placeholder = "Search app, or tap 🔍 for deals...";
+        });
+
+        modeNeedItBtn.addEventListener('click', () => {
+            modeNeedItBtn.classList.add('active');
+            modePerksBtn.classList.remove('active');
+            modeNeedItBtn.setAttribute('aria-pressed', 'true');
+            modePerksBtn.setAttribute('aria-pressed', 'false');
+            currentSearchMode = 'needit';
+            searchInput.placeholder = "Find item nearby (e.g. key cut)...";
+        });
+
+        const categories = [...new Set(perksData.map(item => item.category))];
+        
+        const iconMap = {
+            "Technology & Software": "💻",
+            "Streaming & Subscriptions": "📺",
+            "Campus & USF Resources": "🏛️",
+            "Culture & Education": "🎭",
+            "Sports, Golf & Recreation": "🏆",
+            "Food & Restaurants": "🍔",
+            "Transportation & Travel": "✈️",
+            "Shopping, Lifestyle & Wellness": "🛍️",
+            "Automotive & Car Care": "🚗",
+            "Student Verification Keys": "🔑"
+        };
+
+        categories.forEach(cat => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.dataset.category = cat;
+            bubble.textContent = `${iconMap[cat] || '✨'} ${cat}`;
+            
+            bubble.addEventListener('click', () => {
+                document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
+                bubble.classList.add('active');
+                activeCategory = cat;
+                renderCards();
+            });
+            
+            bubbleContainer.appendChild(bubble);
+        });
+
+        document.querySelector('.bubble[data-category="All"]').addEventListener('click', function() {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeCategory = 'All';
+            renderCards();
+        });
+
+        // Smart Web Search Logic (Switches depending on active toggle mode)
+        function executeSmartSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            let fullQuery = "";
+
+            if (currentSearchMode === 'perks') {
+                // "Find Deals" Parameter Formula
+                const verification = '("University of South Florida students" OR "Student ID" OR "student discount")';
+                const geography = '(USF OR Tampa OR "Temple Terrace" OR "Fowler Ave")';
+                fullQuery = `${query} ${verification} ${geography}`;
+            } else {
+                // "Need It Now" Local Maps/Proximity Formula (Triggers Maps Grid + Local Stores)
+                fullQuery = `${query} near "USF" Tampa FL in stock`;
+            }
+
+            const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(fullQuery)}`;
+            window.open(googleUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        searchBtn.addEventListener('click', executeSmartSearch);
+        emptySearchBtn.addEventListener('click', executeSmartSearch);
+        
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                executeSmartSearch();
+            }
+        });
+
+        function openModal(item) {
+            mTitle.textContent = item.opportunity;
+            mCategory.textContent = item.category;
+            mCost.textContent = item.cost;
+            mEligibility.textContent = item.eligibility;
+            mAction.textContent = item.how_to_get_it;
+            mLink.href = item.link;
+            
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        // Render Local Directory filtering as user types
+        function renderCards() {
+            const searchTerm = searchInput.value.toLowerCase();
+            resultsGrid.innerHTML = '';
+            let count = 0;
+
+            perksData.forEach(item => {
+                const matchesSearch = item.opportunity.toLowerCase().includes(searchTerm) || 
+                                      item.how_to_get_it.toLowerCase().includes(searchTerm) ||
+                                      item.category.toLowerCase().includes(searchTerm);
+                const matchesCategory = activeCategory === 'All' || item.category === activeCategory;
+
+                if (matchesSearch && matchesCategory) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = 'perk-card';
+                    
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <div class="category-tag">${item.category}</div>
+                            <h3 class="card-title">${item.opportunity}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-row">
+                                <strong>Cost:</strong>
+                                <span class="highlight-text">${item.cost}</span>
+                            </div>
+                            <div class="info-row">
+                                <strong>Access:</strong>
+                                <span>${item.eligibility}</span>
+                            </div>
+                        </div>
+                        <div class="click-hint">Click for details & link ↗</div>
+                    `;
+                    
+                    card.addEventListener('click', () => openModal(item));
+                    
+                    resultsGrid.appendChild(card);
+                }
+            });
+
+            // Show Empty State with Web Search Button if nothing found locally
+            if (count === 0) {
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
+        }
+
+        // Trigger local filtering every time the user types a letter
+        searchInput.addEventListener('input', renderCards);
+
+        // Modal close listeners
+        closeModalBtn.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Initial Boot
+        renderCards();
+    </script>
+</body>
+</html>
