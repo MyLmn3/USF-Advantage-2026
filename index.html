@@ -546,95 +546,566 @@
     <script>
         // MASSIVE EXHAUSTIVE DATABASE ARRAY WITH "HEAVY HITTERS" & FULL BULLS COUNTRY LIST
         const perksData = [
-            // AUTOMOTIVE & CAR CARE
-            {"opportunity": "Pep Boys (Tires & Auto Repair)", "category": "Automotive & Car Care", "cost": "10% off", "eligibility": "College ID", "how_to_get_it": "Show your valid USF ID at checkout for 10% off parts, service, and tires.", "link": "https://www.pepboys.com/sale-specials-coupons"},
-            {"opportunity": "Pep Boys Free Towing", "category": "Automotive & Car Care", "cost": "$0", "eligibility": "General Public / Students", "how_to_get_it": "Free towing directly to their Tampa locations if they do the repair.", "link": "https://www.pepboys.com/sale-specials-coupons"},
-            {"opportunity": "Parks Lincoln of Tampa", "category": "Automotive & Car Care", "cost": "Special Pricing", "eligibility": "USF Student / Staff", "how_to_get_it": "Official USF partner offering special vehicle incentives and free on-site mobile service.", "link": "https://www.lincolnoftampa.com/university-of-south-florida-partnership.html"},
-            {"opportunity": "Provident Credit Union Auto Loans", "category": "Automotive & Car Care", "cost": "0.125% Rate Drop", "eligibility": "USF Student / Alumni", "how_to_get_it": "Mention USF when applying to receive a discount on your auto loan interest rate.", "link": "https://providentcu.org/usf/usf-auto-loan-discount"},
-            {"opportunity": "Ice Cold Air Discount Auto", "category": "Automotive & Car Care", "cost": "10% - 40% Off", "eligibility": "College Student / Promo", "how_to_get_it": "Local mechanic offering discounts on brakes, A/C checks, and oil changes via digital coupons.", "link": "https://www.icecoldair.com/"},
-
-            // TECH & SOFTWARE
-            {"opportunity": "Autodesk Education Suite", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "Access to AutoCAD, Maya, and Revit completely free (normally thousands of dollars).", "link": "https://www.autodesk.com/education/edu-software/"},
-            {"opportunity": "Figma Professional", "category": "Technology & Software", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Free premium Professional tier for students (normally $144/year).", "link": "https://www.figma.com/education/"},
-            {"opportunity": "YNAB (You Need A Budget)", "category": "Technology & Software", "cost": "$0", "eligibility": "College Student", "how_to_get_it": "Get the gold-standard budgeting app completely free for your first year.", "link": "https://www.ynab.com/college/"},
-            {"opportunity": "Microsoft Office 365", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "Log into USF Software Catalog for Word, Excel, PowerPoint on 5 devices.", "link": "https://software.usf.edu/all-software"},
-            {"opportunity": "Adobe Creative Cloud", "category": "Technology & Software", "cost": "$0", "eligibility": "Active USF student", "how_to_get_it": "software.usf.edu -> 'Special Request' for full CC suite.", "link": "https://software.usf.edu/all-software"},
-            {"opportunity": "GitHub Student Developer Pack", "category": "Technology & Software", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Sign up with @usf.edu email (Includes free Canva Pro for 12 months).", "link": "https://education.github.com/pack"},
-
-            // STREAMING & SUBSCRIPTIONS
-            {"opportunity": "NYT & Wall Street Journal", "category": "Streaming & Subscriptions", "cost": "$0", "eligibility": "USF Student", "how_to_get_it": "Bypass the paywalls! Get full digital access for free through the USF Library portal.", "link": "https://lib.usf.edu/"},
-            {"opportunity": "Spotify Premium + Hulu", "category": "Streaming & Subscriptions", "cost": "$6.99/mo", "eligibility": "Active USF student", "how_to_get_it": "Verify via SheerID on Spotify (Includes Showtime for some legacy users).", "link": "https://www.spotify.com/us/student/"},
-            {"opportunity": "Apple Music + Apple TV+", "category": "Streaming & Subscriptions", "cost": "$6.99/mo", "eligibility": "Active USF student", "how_to_get_it": "Verify via UNiDAYS for discounted music & free Apple TV+.", "link": "https://offers.applemusic.apple/student-offer"},
-            {"opportunity": "Amazon Prime Student", "category": "Streaming & Subscriptions", "cost": "6 Mos. $0", "eligibility": "Active USF student", "how_to_get_it": "Sign up using @usf.edu email for 6 months free, then half price.", "link": "https://www.amazon.com/Amazon-Student/"},
-
-            // CAMPUS & USF RESOURCES
-            {"opportunity": "Suit-A-Bull", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "USF Student", "how_to_get_it": "Borrow professional business attire completely free for job interviews and career fairs.", "link": "https://www.usf.edu/career-services/students/suit-a-bull.aspx"},
-            {"opportunity": "USF Free Printing", "category": "Campus & USF Resources", "cost": "$0 (Up to $3/day)", "eligibility": "Active student", "how_to_get_it": "First $3.00 of prints free every single day at SG Computer Services lab (MSC 1308).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/sg-computer-services.aspx"},
-            {"opportunity": "USF TimelyCare (TalkNow)", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "Enrolled student", "how_to_get_it": "Free 24/7 on-demand tele-therapy and mental health support without copays.", "link": "https://www.usf.edu/student-affairs/student-health-services/services/timelycare.aspx"},
-            {"opportunity": "USF RecWell Facilities", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Swipe/Scan USF ID for massive campus gyms, indoor/outdoor pools, and fitness.", "link": "https://www.usf.edu/student-affairs/campus-rec/"},
-            {"opportunity": "Feed-A-Bull Food Pantry", "category": "Campus & USF Resources", "cost": "$0", "eligibility": "USF student", "how_to_get_it": "Visit at Student Health Center for free supplemental groceries and food items.", "link": "https://www.usf.edu/student-affairs/student-health-services/services/feed-a-bull-food-pantry.aspx"},
-
-            // CULTURE & EDUCATION
-            {"opportunity": "Tampa Museum of Art", "category": "Culture & Education", "cost": "$0", "eligibility": "College Student", "how_to_get_it": "100% free admission. Just present your valid USF ID at the front desk.", "link": "https://tampamuseum.org/"},
-            {"opportunity": "The Ringling Museum", "category": "Culture & Education", "cost": "$14 (Or Free)", "eligibility": "College Student", "how_to_get_it": "Heavily discounted $14 entry, or completely FREE admission on Mondays.", "link": "https://www.ringling.org/"},
-            {"opportunity": "Tampa Theatre", "category": "Culture & Education", "cost": "Discounted", "eligibility": "College Student", "how_to_get_it": "Show your ID at the box office for discounted tickets to classic films at the historic theater.", "link": "https://tampatheatre.org/"},
-            {"opportunity": "Busch Gardens USF Fun Card", "category": "Culture & Education", "cost": "$50 / Discounted", "eligibility": "USF Student", "how_to_get_it": "Present ID at ticket window for a massively discounted annual pass.", "link": "https://buschgardens.com/tampa/special-offers/college-offer/"},
-
-            // SPORTS, GOLF & RECREATION
-            {"opportunity": "GolfPass Student (GolfNow)", "category": "Sports, Golf & Recreation", "cost": "$59/yr", "eligibility": "College Student", "how_to_get_it": "Waived booking fees on GolfNow, $10/mo tee time credits, & Peacock Premium.", "link": "https://www.golfpass.com/student"},
-            {"opportunity": "First Tee Tampa Bay Card", "category": "Sports, Golf & Recreation", "cost": "$10/year", "eligibility": "Age 18-22", "how_to_get_it": "The Holy Grail of golf: Unlocks $1 golf rounds & $1 range balls at Rogers Park.", "link": "https://firstteetampabay.org/programs/membership-cards/"},
-            {"opportunity": "Topgolf Tampa College Night", "category": "Sports, Golf & Recreation", "cost": "50% Off", "eligibility": "College Student", "how_to_get_it": "Half-price gameplay every Wednesday night. Just show your USF ID.", "link": "https://topgolf.com/us/tampa/"},
-            {"opportunity": "USF Riverfront Park", "category": "Sports, Golf & Recreation", "cost": "$5 Rentals", "eligibility": "USF Student", "how_to_get_it": "Free entry and highly discounted kayak, canoe, and paddleboard rentals (just $5).", "link": "https://www.usf.edu/student-affairs/campus-rec/outdoor-recreation/riverfront-park.aspx"},
-            {"opportunity": "USF Student Ticket Central", "category": "Sports, Golf & Recreation", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Claim free USF football & basketball tickets via app.", "link": "https://gousfbulls.com/sports/2018/8/16/student-tickets-and-information"},
-            {"opportunity": "Tampa Bay Lightning Student Rush", "category": "Sports, Golf & Recreation", "cost": "$15 - $20", "eligibility": "College Student", "how_to_get_it": "Text alerts at 10 AM game days for dirt-cheap SRO/Lower level tickets.", "link": "https://www.gofevo.com/group/TBL25Rush"},
-
-            // FOOD & RESTAURANTS
-            {"opportunity": "Chewy Boba Company", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Chicken Salad Chick", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off dine-in and take-out.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Cici's Pizza", "category": "Food & Restaurants", "cost": "Free Drink", "eligibility": "USF ID", "how_to_get_it": "Free drink with buffet purchase.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Cold Stone Creamery", "category": "Food & Restaurants", "cost": "25% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Culvers", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Dunkin'", "category": "Food & Restaurants", "cost": "5% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Edible Arrangements", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Fuzzy's Taco Shop", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Inspire House Nutrition", "category": "Food & Restaurants", "cost": "15% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Jersey Mike's Subs", "category": "Food & Restaurants", "cost": "$7.99 Regular Sub", "eligibility": "USF ID", "how_to_get_it": "Any regular sub for $7.99.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Portillo's", "category": "Food & Restaurants", "cost": "Free Fries", "eligibility": "Wear Bulls gear", "how_to_get_it": "Free Fries Fridays when in Bulls Gear.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Qdoba Mexican Eats", "category": "Food & Restaurants", "cost": "$1.25 Drink", "eligibility": "USF ID", "how_to_get_it": "$1.25 drink specials.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "South Tampa Pizza", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off on purchases, no minimum needed.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Taco Bus", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Which Wich", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "So Fresh", "category": "Food & Restaurants", "cost": "7.5% - 10% Off", "eligibility": "USF ID", "how_to_get_it": "7.5% off standard, 10% off catering orders $100+.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Speakeasy Kava", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "Promo Code", "how_to_get_it": "10% off all teas with code Bula.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "The Hot Spot Nutrition Club", "category": "Food & Restaurants", "cost": "$2 Off", "eligibility": "USF ID", "how_to_get_it": "$2 off all combos.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "The Hangar Restaurant", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off food & drinks.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Dunns River Island Cafe", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off Mon–Sat 11AM–9PM (excludes seafood/oxtail/goat).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Yummy Chicken", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off all fried chicken items.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Aussie Grill", "category": "Food & Restaurants", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off dine-in, take-out, or drive-thru.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-
-            // TRANSPORTATION & TRAVEL
-            {"opportunity": "PSTA Beach Buses (U-Pass)", "category": "Transportation & Travel", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Ride buses all the way to St. Pete Beach completely free by showing your USF ID.", "link": "https://psta.net/programs/upass/"},
-            {"opportunity": "Amtrak Student Discount", "category": "Transportation & Travel", "cost": "15% off", "eligibility": "College Student", "how_to_get_it": "15% off national rail fares. Must book at least one day in advance.", "link": "https://www.amtrak.com/student-discounts"},
-            {"opportunity": "Bull Runner Buses", "category": "Transportation & Travel", "cost": "$0", "eligibility": "Valid USFCard", "how_to_get_it": "Swipe/Show ID when boarding.", "link": "https://www.usf.edu/administrative-services/parking/transit/index.aspx"},
-            {"opportunity": "Brightline Trains (Florida)", "category": "Transportation & Travel", "cost": "25% off", "eligibility": "College Student", "how_to_get_it": "25% off SMART fares; Register via .edu email.", "link": "https://www.gobrightline.com/offers/student-discount"},
-
-            // SHOPPING, LIFESTYLE & WELLNESS
-            {"opportunity": "Orange Theory Fitness", "category": "Shopping, Lifestyle & Wellness", "cost": "$10 Off", "eligibility": "USF ID", "how_to_get_it": "$10 Off Monthly Memberships.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Nails at New Tampa", "category": "Shopping, Lifestyle & Wellness", "cost": "15% Off", "eligibility": "USF ID", "how_to_get_it": "Show ID at checkout.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Zen Life Naturals", "category": "Shopping, Lifestyle & Wellness", "cost": "25% Off", "eligibility": "Promo Code", "how_to_get_it": "25% off site-wide with code ZENLIFEUSF25.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Central Cycling", "category": "Shopping, Lifestyle & Wellness", "cost": "$39 first month", "eligibility": "USF ID", "how_to_get_it": "$39 for first month (reg. $95).", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Curves", "category": "Shopping, Lifestyle & Wellness", "cost": "66% Off", "eligibility": "USF ID", "how_to_get_it": "66% off service fee and monthly discount.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Evolution Medical Associates", "category": "Shopping, Lifestyle & Wellness", "cost": "10% Off", "eligibility": "USF ID", "how_to_get_it": "10% off a one-hour acupuncture session.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Krav Maga Martial Arts", "category": "Shopping, Lifestyle & Wellness", "cost": "25% Off", "eligibility": "USF ID", "how_to_get_it": "25% off initial membership + no money down.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "The Bay Spa Tampa", "category": "Shopping, Lifestyle & Wellness", "cost": "$20 Off", "eligibility": "First Time Student", "how_to_get_it": "$20 off any service for first time student clients.", "link": "https://www.usf.edu/student-affairs/student-government/usf-sg/bullscounty.aspx"},
-            {"opportunity": "Great Clips (Tampa Palms)", "category": "Shopping, Lifestyle & Wellness", "cost": "~$13 Haircuts", "eligibility": "USF ID", "how_to_get_it": "Show USF ID for a heavily discounted student rate at the Tampa Palms location.", "link": "https://www.greatclips.com/"},
-            {"opportunity": "Hasan'z Barbershop", "category": "Shopping, Lifestyle & Wellness", "cost": "Student Rate", "eligibility": "USF ID", "how_to_get_it": "Ask for the USF student discount at checkout. A staple USF barber.", "link": "https://www.instagram.com/hasanzbarbershop/"},
-            {"opportunity": "Oxygen Barbershop", "category": "Shopping, Lifestyle & Wellness", "cost": "Discounted", "eligibility": "USF ID", "how_to_get_it": "Ask for the specific USF student discount at the register.", "link": "https://booksy.com/en-us/11261_oxygen-barbershop_barber-shop_15496_tampa"},
-            {"opportunity": "Best Buy Student Hub", "category": "Shopping, Lifestyle & Wellness", "cost": "Varies", "eligibility": "College Student", "how_to_get_it": "Sign up for Member Deals to get massive hidden discounts on laptops and tech.", "link": "https://www.bestbuy.com/site/back-to-school/college-student-deals/pcmcat276200050000.c"},
-
-            // STUDENT VERIFICATION KEYS
-            {"opportunity": "UNiDAYS Account", "category": "Student Verification Keys", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Register with @usf.edu email for Apple, ASOS, Nike, etc.", "link": "https://www.myunidays.com/"},
-            {"opportunity": "ID.me Account", "category": "Student Verification Keys", "cost": "$0", "eligibility": "Active student", "how_to_get_it": "Link university records to unlock discounts at checkout.", "link": "https://shop.id.me/student"}
+            {
+                opportunity: "Pep Boys (Tires & Auto Repair)",
+                category: "Automotive & Car Care",
+                cost: "10% off",
+                eligibility: "College ID",
+                how_to_get_it: "Show your valid USF ID at checkout for 10% off parts, service, and tires.",
+                link: "https://www.pepboys.com/sale-specials-coupons"
+            },
+            {
+                opportunity: "Pep Boys Free Towing",
+                category: "Automotive & Car Care",
+                cost: "$0",
+                eligibility: "General Public / Students",
+                how_to_get_it: "Free towing directly to their Tampa locations if they do the repair.",
+                link: "https://www.pepboys.com/sale-specials-coupons"
+            },
+            {
+                opportunity: "Parks Lincoln of Tampa",
+                category: "Automotive & Car Care",
+                cost: "Special Pricing",
+                eligibility: "USF Student / Staff",
+                how_to_get_it: "Official USF partner offering special vehicle incentives and free on-site mobile service.",
+                link: "https://www.lincolnoftampa.com/university-of-south-florida-partnership.html"
+            },
+            {
+                opportunity: "Provident Credit Union Auto Loans",
+                category: "Automotive & Car Care",
+                cost: "0.125% Rate Drop",
+                eligibility: "USF Student / Alumni",
+                how_to_get_it: "Mention USF when applying to receive a discount on your auto loan interest rate.",
+                link: "https://providentcu.org/usf/usf-auto-loan-discount"
+            },
+            {
+                opportunity: "Ice Cold Air Discount Auto",
+                category: "Automotive & Car Care",
+                cost: "10% - 40% Off",
+                eligibility: "College Student / Promo",
+                how_to_get_it: "Local mechanic offering discounts on brakes, A/C checks, and oil changes via digital coupons.",
+                link: "https://www.icecoldair.com/"
+            },
+            {
+                opportunity: "Autodesk Education Suite",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "Active USF student",
+                how_to_get_it: "Access to AutoCAD, Maya, and Revit completely free (normally thousands of dollars).",
+                link: "https://www.autodesk.com/education/edu-software/"
+            },
+            {
+                opportunity: "Figma Professional",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Free premium Professional tier for students (normally $144/year).",
+                link: "https://www.figma.com/education/"
+            },
+            {
+                opportunity: "YNAB (You Need A Budget)",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "College Student",
+                how_to_get_it: "Get the gold-standard budgeting app completely free for your first year.",
+                link: "https://www.ynab.com/college/"
+            },
+            {
+                opportunity: "Microsoft Office 365",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "Active USF student",
+                how_to_get_it: "Log into USF Software Catalog for Word, Excel, PowerPoint on 5 devices.",
+                link: "https://software.usf.edu/all-software"
+            },
+            {
+                opportunity: "Adobe Creative Cloud",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "Active USF student",
+                how_to_get_it: "software.usf.edu -> 'Special Request' for full CC suite.",
+                link: "https://software.usf.edu/all-software"
+            },
+            {
+                opportunity: "GitHub Student Developer Pack",
+                category: "Technology & Software",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Sign up with @usf.edu email (Includes free Canva Pro for 12 months).",
+                link: "https://education.github.com/pack"
+            },
+            {
+                opportunity: "NYT & Wall Street Journal",
+                category: "Streaming & Subscriptions",
+                cost: "$0",
+                eligibility: "USF Student",
+                how_to_get_it: "Bypass the paywalls! Get full digital access for free through the USF Library portal.",
+                link: "https://lib.usf.edu/"
+            },
+            {
+                opportunity: "Spotify Premium + Hulu",
+                category: "Streaming & Subscriptions",
+                cost: "$6.99/mo",
+                eligibility: "Active USF student",
+                how_to_get_it: "Verify via SheerID on Spotify (Includes Showtime for some legacy users).",
+                link: "https://www.spotify.com/us/student/"
+            },
+            {
+                opportunity: "Apple Music + Apple TV+",
+                category: "Streaming & Subscriptions",
+                cost: "$6.99/mo",
+                eligibility: "Active USF student",
+                how_to_get_it: "Verify via UNiDAYS for discounted music & free Apple TV+.",
+                link: "https://offers.applemusic.apple/student-offer"
+            },
+            {
+                opportunity: "Amazon Prime Student",
+                category: "Streaming & Subscriptions",
+                cost: "6 Mos. $0",
+                eligibility: "Active USF student",
+                how_to_get_it: "Sign up using @usf.edu email for 6 months free, then half price.",
+                link: "https://www.amazon.com/Amazon-Student/"
+            },
+            {
+                opportunity: "Suit-A-Bull",
+                category: "Campus & USF Resources",
+                cost: "$0",
+                eligibility: "USF Student",
+                how_to_get_it: "Borrow professional business attire completely free for job interviews and career fairs.",
+                link: "https://careers.usf.edu/resources/suit-a-bull/"
+            },
+            {
+                opportunity: "USF Free Printing",
+                category: "Campus & USF Resources",
+                cost: "$0 (Up to $3/day)",
+                eligibility: "Active student",
+                how_to_get_it: "First $3.00 of prints free every single day at SG Computer Services lab (MSC 1308).",
+                link: "https://www.usf.edu/student-affairs/student-government/usf-sg/sg-computer-services.aspx"
+            },
+            {
+                opportunity: "USF TimelyCare (TalkNow)",
+                category: "Campus & USF Resources",
+                cost: "$0",
+                eligibility: "Enrolled student",
+                how_to_get_it: "Free 24/7 on-demand tele-therapy and mental health support without copays.",
+                link: "https://www.usf.edu/student-affairs/student-health-services/services/timelycare.aspx"
+            },
+            {
+                opportunity: "USF RecWell Facilities",
+                category: "Campus & USF Resources",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Swipe/Scan USF ID for massive campus gyms, indoor/outdoor pools, and fitness.",
+                link: "https://www.usf.edu/student-affairs/campus-rec/"
+            },
+            {
+                opportunity: "Feed-A-Bull Food Pantry",
+                category: "Campus & USF Resources",
+                cost: "$0",
+                eligibility: "USF student",
+                how_to_get_it: "Visit at Student Health Center for free supplemental groceries and food items.",
+                link: "https://www.usf.edu/student-affairs/student-health-services/services/feed-a-bull-food-pantry.aspx"
+            },
+            {
+                opportunity: "Tampa Museum of Art",
+                category: "Culture & Education",
+                cost: "$0",
+                eligibility: "College Student",
+                how_to_get_it: "100% free admission. Just present your valid USF ID at the front desk.",
+                link: "https://tampamuseum.org/"
+            },
+            {
+                opportunity: "The Ringling Museum",
+                category: "Culture & Education",
+                cost: "$14 (Or Free)",
+                eligibility: "College Student",
+                how_to_get_it: "Heavily discounted $14 entry, or completely FREE admission on Mondays.",
+                link: "https://www.ringling.org/"
+            },
+            {
+                opportunity: "Tampa Theatre",
+                category: "Culture & Education",
+                cost: "Discounted",
+                eligibility: "College Student",
+                how_to_get_it: "Show your ID at the box office for discounted tickets to classic films at the historic theater.",
+                link: "https://tampatheatre.org/"
+            },
+            {
+                opportunity: "Busch Gardens USF Fun Card",
+                category: "Culture & Education",
+                cost: "$50 / Discounted",
+                eligibility: "USF Student",
+                how_to_get_it: "Present ID at ticket window for a massively discounted annual pass.",
+                link: "https://buschgardens.com/tampa/tickets/student-deals/"
+            },
+            {
+                opportunity: "GolfPass Student (GolfNow)",
+                category: "Sports, Golf & Recreation",
+                cost: "$59/yr",
+                eligibility: "College Student",
+                how_to_get_it: "Waived booking fees on GolfNow, $10/mo tee time credits, & Peacock Premium.",
+                link: "https://www.golfpass.com/student"
+            },
+            {
+                opportunity: "First Tee Tampa Bay Card",
+                category: "Sports, Golf & Recreation",
+                cost: "$10/year",
+                eligibility: "Age 18-22",
+                how_to_get_it: "The Holy Grail of golf: Unlocks $1 golf rounds & $1 range balls at Rogers Park.",
+                link: "https://firstteetampabay.org/programs/membership-cards/"
+            },
+            {
+                opportunity: "Topgolf Tampa College Night",
+                category: "Sports, Golf & Recreation",
+                cost: "50% Off",
+                eligibility: "College Student",
+                how_to_get_it: "Half-price gameplay every Wednesday night. Just show your USF ID.",
+                link: "https://topgolf.com/us/tampa/"
+            },
+            {
+                opportunity: "USF Riverfront Park",
+                category: "Sports, Golf & Recreation",
+                cost: "$5 Rentals",
+                eligibility: "USF Student",
+                how_to_get_it: "Free entry and highly discounted kayak, canoe, and paddleboard rentals (just $5).",
+                link: "https://www.usf.edu/student-affairs/campus-rec/outdoor-recreation/riverfront-park.aspx"
+            },
+            {
+                opportunity: "USF Student Ticket Central",
+                category: "Sports, Golf & Recreation",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Claim free USF football & basketball tickets via app.",
+                link: "https://gousfbulls.com/sports/2018/8/16/student-tickets-and-information"
+            },
+            {
+                opportunity: "Tampa Bay Lightning Student Rush",
+                category: "Sports, Golf & Recreation",
+                cost: "$15 - $20",
+                eligibility: "College Student",
+                how_to_get_it: "Text alerts at 10 AM game days for dirt-cheap SRO/Lower level tickets.",
+                link: "https://www.nhl.com/lightning/tickets/student-rush"
+            },
+            {
+                opportunity: "Chewy Boba Company",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout. (Note: the original USF/Fowler Ave shop shows as closed on Yelp; linked site covers their other FL locations.)",
+                link: "https://www.chewyboba.com/"
+            },
+            {
+                opportunity: "Chicken Salad Chick",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off dine-in and take-out.",
+                link: "https://www.chickensaladchick.com/"
+            },
+            {
+                opportunity: "Cici's Pizza",
+                category: "Food & Restaurants",
+                cost: "Free Drink",
+                eligibility: "USF ID",
+                how_to_get_it: "Free drink with buffet purchase.",
+                link: "https://www.cicis.com/"
+            },
+            {
+                opportunity: "Cold Stone Creamery",
+                category: "Food & Restaurants",
+                cost: "25% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.coldstonecreamery.com/"
+            },
+            {
+                opportunity: "Culvers",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.culvers.com/"
+            },
+            {
+                opportunity: "Dunkin'",
+                category: "Food & Restaurants",
+                cost: "5% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.dunkindonuts.com/"
+            },
+            {
+                opportunity: "Edible Arrangements",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.ediblearrangements.com/"
+            },
+            {
+                opportunity: "Fuzzy's Taco Shop",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://fuzzystacoshop.com/"
+            },
+            {
+                opportunity: "Inspire House Nutrition",
+                category: "Food & Restaurants",
+                cost: "15% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.yelp.com/biz/inspire-house-nutrition-tampa"
+            },
+            {
+                opportunity: "Jersey Mike's Subs",
+                category: "Food & Restaurants",
+                cost: "$7.99 Regular Sub",
+                eligibility: "USF ID",
+                how_to_get_it: "Any regular sub for $7.99.",
+                link: "https://www.jerseymikes.com/"
+            },
+            {
+                opportunity: "Portillo's",
+                category: "Food & Restaurants",
+                cost: "Free Fries",
+                eligibility: "Wear Bulls gear",
+                how_to_get_it: "Free Fries Fridays when in Bulls Gear.",
+                link: "https://www.portillos.com/"
+            },
+            {
+                opportunity: "Qdoba Mexican Eats",
+                category: "Food & Restaurants",
+                cost: "$1.25 Drink",
+                eligibility: "USF ID",
+                how_to_get_it: "$1.25 drink specials.",
+                link: "https://www.qdoba.com/"
+            },
+            {
+                opportunity: "South Tampa Pizza",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off on purchases, no minimum needed.",
+                link: "https://www.southtampapizza.com/"
+            },
+            {
+                opportunity: "Taco Bus",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://taco-bus.com/"
+            },
+            {
+                opportunity: "Which Wich",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://whichwich.com/"
+            },
+            {
+                opportunity: "So Fresh",
+                category: "Food & Restaurants",
+                cost: "7.5% - 10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "7.5% off standard, 10% off catering orders $100+.",
+                link: "https://sofresh.com/"
+            },
+            {
+                opportunity: "Speakeasy Kava",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "Promo Code",
+                how_to_get_it: "10% off all teas with code Bula.",
+                link: "https://speakeasykavabar.com/"
+            },
+            {
+                opportunity: "The Hot Spot Nutrition Club",
+                category: "Food & Restaurants",
+                cost: "$2 Off",
+                eligibility: "USF ID",
+                how_to_get_it: "$2 off all combos.",
+                link: "https://www.facebook.com/p/The-hot-spot-nutrition-100069464371858/"
+            },
+            {
+                opportunity: "The Hangar Restaurant",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off food & drinks.",
+                link: "https://thehangarstpete.com/"
+            },
+            {
+                opportunity: "Dunns River Island Cafe",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off Mon–Sat 11AM–9PM (excludes seafood/oxtail/goat).",
+                link: "https://dunnsrivercafe.com/"
+            },
+            {
+                opportunity: "Yummy Chicken",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off all fried chicken items. (Note: this Fowler Ave location shows as CLOSED on Yelp as of 2026 — verify before visiting.)",
+                link: "https://www.yelp.com/biz/chicken-yummy-tampa-2"
+            },
+            {
+                opportunity: "Aussie Grill",
+                category: "Food & Restaurants",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off dine-in, take-out, or drive-thru.",
+                link: "https://www.aussiegrill.com/"
+            },
+            {
+                opportunity: "PSTA Beach Buses (U-Pass)",
+                category: "Transportation & Travel",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Ride buses all the way to St. Pete Beach completely free by showing your USF ID.",
+                link: "https://psta.net/programs/upass/"
+            },
+            {
+                opportunity: "Amtrak Student Discount",
+                category: "Transportation & Travel",
+                cost: "15% off",
+                eligibility: "College Student",
+                how_to_get_it: "15% off national rail fares. Must book at least one day in advance.",
+                link: "https://www.amtrak.com/student-discounts"
+            },
+            {
+                opportunity: "Bull Runner Buses",
+                category: "Transportation & Travel",
+                cost: "$0",
+                eligibility: "Valid USFCard",
+                how_to_get_it: "Swipe/Show ID when boarding.",
+                link: "https://www.usf.edu/administrative-services/parking/transit/index.aspx"
+            },
+            {
+                opportunity: "Brightline Trains (Florida)",
+                category: "Transportation & Travel",
+                cost: "25% off",
+                eligibility: "College Student",
+                how_to_get_it: "25% off SMART fares; Register via .edu email.",
+                link: "https://www.gobrightline.com/offers/student-discount"
+            },
+            {
+                opportunity: "Orange Theory Fitness",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "$10 Off",
+                eligibility: "USF ID",
+                how_to_get_it: "$10 Off Monthly Memberships.",
+                link: "https://www.orangetheory.com/"
+            },
+            {
+                opportunity: "Nails at New Tampa",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "15% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "Show ID at checkout.",
+                link: "https://www.yelp.com/biz/nails-at-new-tampa-tampa"
+            },
+            {
+                opportunity: "Zen Life Naturals",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "25% Off",
+                eligibility: "Promo Code",
+                how_to_get_it: "25% off site-wide with code ZENLIFEUSF25.",
+                link: "https://zenlifenaturals.com/"
+            },
+            {
+                opportunity: "Central Cycling",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "$39 first month",
+                eligibility: "USF ID",
+                how_to_get_it: "$39 for first month (reg. $95).",
+                link: "https://centralcycling.com/"
+            },
+            {
+                opportunity: "Curves",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "66% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "66% off service fee and monthly discount.",
+                link: "https://www.curves.com/"
+            },
+            {
+                opportunity: "Evolution Medical Associates",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "10% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "10% off a one-hour acupuncture session. (Note: Yelp lists this Clearwater location as CLOSED as of 2026 — call ahead to confirm.)",
+                link: "http://evolutionmedicalassociates.com/"
+            },
+            {
+                opportunity: "Krav Maga Martial Arts",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "25% Off",
+                eligibility: "USF ID",
+                how_to_get_it: "25% off initial membership + no money down.",
+                link: "https://tampakravmaga.com/"
+            },
+            {
+                opportunity: "The Bay Spa Tampa",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "$20 Off",
+                eligibility: "First Time Student",
+                how_to_get_it: "$20 off any service for first time student clients.",
+                link: "https://thebayspatampa.com/"
+            },
+            {
+                opportunity: "Great Clips (Tampa Palms)",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "~$13 Haircuts",
+                eligibility: "USF ID",
+                how_to_get_it: "Show USF ID for a heavily discounted student rate at the Tampa Palms location.",
+                link: "https://www.greatclips.com/"
+            },
+            {
+                opportunity: "Hasan'z Barbershop",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "Student Rate",
+                eligibility: "USF ID",
+                how_to_get_it: "Ask for the USF student discount at checkout. A staple USF barber.",
+                link: "https://www.instagram.com/hasanzbarbershop/"
+            },
+            {
+                opportunity: "Oxygen Barbershop",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "Discounted",
+                eligibility: "USF ID",
+                how_to_get_it: "Ask for the specific USF student discount at the register.",
+                link: "https://booksy.com/en-us/11261_oxygen-barbershop_barber-shop_15496_tampa"
+            },
+            {
+                opportunity: "Best Buy Student Hub",
+                category: "Shopping, Lifestyle & Wellness",
+                cost: "Varies",
+                eligibility: "College Student",
+                how_to_get_it: "Sign up for Member Deals to get massive hidden discounts on laptops and tech.",
+                link: "https://www.bestbuy.com/site/back-to-school/college-student-deals/pcmcat276200050000.c"
+            },
+            {
+                opportunity: "UNiDAYS Account",
+                category: "Student Verification Keys",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Register with @usf.edu email for Apple, ASOS, Nike, etc.",
+                link: "https://www.myunidays.com/"
+            },
+            {
+                opportunity: "ID.me Account",
+                category: "Student Verification Keys",
+                cost: "$0",
+                eligibility: "Active student",
+                how_to_get_it: "Link university records to unlock discounts at checkout.",
+                link: "https://shop.id.me/student"
+            },
         ];
         
         const resultsGrid = document.getElementById('resultsGrid');
