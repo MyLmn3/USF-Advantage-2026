@@ -320,6 +320,22 @@
             font-weight: 700;
         }
 
+        .gem-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0b1a14;
+            background: linear-gradient(to right, #f5e6a8, var(--usf-gold));
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 12px rgba(212, 197, 113, 0.4);
+        }
+
         .click-hint {
             margin-top: 20px;
             font-size: 0.85rem;
@@ -589,6 +605,7 @@
             <div class="bubble-filters" id="bubbleFilters" role="group" aria-label="Filter by category">
                 <div class="bubble active" data-category="All">All Resources</div>
                 <div class="bubble" data-category="Saved" id="savedBubble">❤️ Saved</div>
+                <div class="bubble" data-category="Gems" id="gemsBubble">💎 Hidden Gems</div>
             </div>
         </div>
 
@@ -1190,6 +1207,55 @@
                 how_to_get_it: "Link university records to unlock discounts at checkout.",
                 link: "https://shop.id.me/student"
             },
+
+            // --- Hidden Gems: added after community feedback (Aug 2026) ---
+            // Verified against current, primary-source pages — not the generic
+            // USF hub — so each link goes straight to the real offer.
+            {
+                opportunity: "Sun-Ray Cinema (USF Student Tickets)",
+                category: "Culture & Education",
+                cost: "$6 (Reg. $8.75)",
+                eligibility: "Valid USF Student ID",
+                how_to_get_it: "Show your USF student ID at the box office for $6 tickets any day, or $5 on \"Tapped Out Tuesdays.\" Located at University Mall, right on the Bull Runner route.",
+                link: "https://www.sunraycinema.com/",
+                hidden_gem: true
+            },
+            {
+                opportunity: "Jason's Deli USF Meal Deal",
+                category: "Food & Restaurants",
+                cost: "$10.99",
+                eligibility: "Valid USF Student ID",
+                how_to_get_it: "Show your student ID at the East Fowler Ave location for a full meal — entrée, side, and drink — for $10.99. Dine-in or carry-out only.",
+                link: "https://www.jasonsdeli.com/landings/student-meal-deals/usf/",
+                hidden_gem: true
+            },
+            {
+                opportunity: "Samsung Education Store",
+                category: "Technology & Software",
+                cost: "Up to 30% Off",
+                eligibility: ".edu email or ID.me verification",
+                how_to_get_it: "Verify your student status with ID.me or your .edu email through Samsung's Education Offer Program to unlock discounted pricing on Galaxy phones, tablets, and laptops.",
+                link: "https://www.samsung.com/us/shop/offer-program/education/",
+                hidden_gem: true
+            },
+            {
+                opportunity: "Dell Student Purchase Program",
+                category: "Technology & Software",
+                cost: "10% Off + Rewards",
+                eligibility: ".edu email, verified via SheerID",
+                how_to_get_it: "Create a Dell account, join Dell Rewards, and verify your student status through SheerID to unlock 10% off PCs and accessories plus Dell Rewards points.",
+                link: "https://www.dell.com/en-us/lp/students",
+                hidden_gem: true
+            },
+            {
+                opportunity: "HP Education Store",
+                category: "Technology & Software",
+                cost: "Up to 40% Off",
+                eligibility: ".edu email or ID.me verification",
+                how_to_get_it: "Sign up at the HP Education Store with your school email (or verify via ID.me) to unlock discounted laptops, printers, and accessories.",
+                link: "https://www.hp.com/us-en/shop/cv/hp-education",
+                hidden_gem: true
+            },
         ];
         
         const resultsGrid = document.getElementById('resultsGrid');
@@ -1253,6 +1319,14 @@
             document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
             savedBubble.classList.add('active');
             activeCategory = 'Saved';
+            renderCards();
+        });
+
+        const gemsBubble = document.getElementById('gemsBubble');
+        gemsBubble.addEventListener('click', () => {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
+            gemsBubble.classList.add('active');
+            activeCategory = 'Gems';
             renderCards();
         });
 
@@ -1334,18 +1408,28 @@
                 // "Find Deals" Parameter Formula — student-discount intent
                 const verification = '("University of South Florida students" OR "Student ID" OR "student discount")';
                 const geography = '(USF OR Tampa OR "Temple Terrace" OR "Fowler Ave")';
-                fullQuery = `${query} ${verification} ${geography} -pinterest.com -reddit.com`;
+                fullQuery = `${query} ${verification} ${geography} -site:reddit.com -site:pinterest.com -site:quora.com`;
             } else {
-                // "Need It Now" Formula — tightened for local/in-stock retail
-                // results, while explicitly OR-ing in site:usf.edu so campus
-                // department pages (registrar, financial aid, ID center, etc.)
-                // still surface for admin-style queries like "need my transcripts".
-                // That department-lookup behavior users liked wasn't a fluke of
-                // loose matching — it's made a deliberate, permanent part of the
-                // formula here instead of an accidental side effect.
+                // "Need It Now" Formula — for "I need X and don't know where
+                // to get it." Built for three things at once:
+                //   1. Reliable, nearby results — real retailers, not forum chatter.
+                //   2. Big-box stores stay in the running (Home Depot, Lowe's,
+                //      Walmart, Target, Best Buy, etc.) — these are OR'd in
+                //      alongside generic "store/location/hours" terms, so they
+                //      surface for a hardware query like "copper wire" without
+                //      forcing them onto unrelated searches.
+                //   3. site:usf.edu is OR'd in too, so a lookup like "library
+                //      phone number" or "need my transcripts" still surfaces
+                //      the actual campus department page — a deliberate,
+                //      permanent part of the formula, not a side effect.
+                // Reddit/Pinterest/Quora were previously excluded with bare
+                // "-reddit.com" style terms, which only blocks pages that
+                // literally contain that text — not pages hosted on those
+                // sites. Using "-site:" is the correct operator and is what
+                // actually keeps forum threads from crowding out real results.
                 const local = '("near USF" OR "Tampa, FL" OR "Temple Terrace, FL")';
-                const official = '(site:usf.edu OR store OR location OR hours OR "in stock")';
-                fullQuery = `${query} ${local} ${official} -pinterest.com -reddit.com`;
+                const retail = '(Walmart OR Target OR "Home Depot" OR Lowes OR "Best Buy" OR store OR location OR hours OR "in stock")';
+                fullQuery = `${query} ${local} (site:usf.edu OR ${retail}) -site:reddit.com -site:pinterest.com -site:quora.com`;
             }
 
             const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(fullQuery)}`;
@@ -1402,7 +1486,9 @@
                     ? true
                     : activeCategory === 'Saved'
                         ? favorites.has(item.opportunity)
-                        : item.category === activeCategory;
+                        : activeCategory === 'Gems'
+                            ? !!item.hidden_gem
+                            : item.category === activeCategory;
 
                 if (matchesSearch && matchesCategory) {
                     count++;
@@ -1420,6 +1506,7 @@
                     card.innerHTML = `
                         <div class="card-header">
                             <div class="card-header-text">
+                                ${item.hidden_gem ? `<div class="gem-badge">💎 Hidden Gem</div>` : ''}
                                 <div class="category-tag">${icon} ${item.category}</div>
                                 <h3 class="card-title">${item.opportunity}</h3>
                             </div>
@@ -1463,7 +1550,9 @@
                     ? `${count} result${count === 1 ? '' : 's'} for "${searchInput.value.trim()}"`
                     : activeCategory === 'Saved'
                         ? `${count} saved resource${count === 1 ? '' : 's'}`
-                        : `${count} resource${count === 1 ? '' : 's'} available`;
+                        : activeCategory === 'Gems'
+                            ? `${count} hidden gem${count === 1 ? '' : 's'}`
+                            : `${count} resource${count === 1 ? '' : 's'} available`;
             } else {
                 resultsMeta.textContent = '';
             }
@@ -1474,7 +1563,7 @@
                 emptyState.querySelector('p').textContent = activeCategory === 'Saved'
                     ? "You haven't saved anything yet — tap the 🤍 on any card to save it here."
                     : "No local deals found in app for that item.";
-                emptySearchBtn.style.display = activeCategory === 'Saved' ? 'none' : 'inline-block';
+                emptySearchBtn.style.display = (activeCategory === 'Saved' || activeCategory === 'Gems') ? 'none' : 'inline-block';
             } else {
                 emptyState.style.display = 'none';
             }
