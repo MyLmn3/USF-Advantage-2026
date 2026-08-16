@@ -238,8 +238,19 @@
             border-color: rgba(212, 197, 113, 0.5);
         }
 
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .card-header-text { flex: 1; min-width: 0; }
+
         .category-tag {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -247,6 +258,26 @@
             font-weight: 800;
             margin-bottom: 12px;
         }
+
+        .fav-btn {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.05rem;
+            line-height: 1;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .fav-btn:hover { background: rgba(0,0,0,0.4); transform: scale(1.08); }
+        .fav-btn.saved { color: var(--usf-gold); border-color: var(--usf-gold); box-shadow: 0 0 10px var(--glass-glow); }
 
         .card-title {
             font-size: 1.35rem;
@@ -270,12 +301,23 @@
         }
         .info-row strong {
             min-width: 80px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.65);
             font-weight: 400;
         }
         .info-row span {
             flex: 1;
             font-weight: 600;
+        }
+
+        .free-badge {
+            display: inline-block;
+            background: rgba(120, 220, 150, 0.18);
+            color: #8be8a6;
+            border: 1px solid rgba(120, 220, 150, 0.4);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
 
         .click-hint {
@@ -284,12 +326,50 @@
             text-align: right;
             color: var(--usf-gold);
             font-weight: 600;
-            opacity: 0;
+            opacity: 0.55;
             transition: opacity 0.3s ease;
         }
         
-        .perk-card:hover .click-hint {
+        .perk-card:hover .click-hint,
+        .perk-card:focus-visible .click-hint {
             opacity: 1;
+        }
+
+        .results-meta {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.55);
+            margin: -20px 0 25px;
+            letter-spacing: 0.3px;
+        }
+
+        .search-hint {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.45);
+            text-align: right;
+            margin-top: 2px;
+            letter-spacing: 0.2px;
+        }
+
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .perk-card {
+            animation: cardFadeIn 0.45s ease both;
+        }
+
+        /* Keyboard focus visibility across interactive elements */
+        .bubble:focus-visible,
+        .perk-card:focus-visible,
+        .toggle-btn:focus-visible,
+        .fav-btn:focus-visible,
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--usf-gold);
+            outline-offset: 3px;
         }
 
         /* Modal / Glass Bubble Pop-Up */
@@ -497,8 +577,9 @@
             <div class="search-pill">
                 <label for="searchInput" class="sr-only">Search deals and resources</label>
                 <input type="search" id="searchInput" placeholder="Search app, or tap 🔍 for deals..." enterkeyhint="search" autocomplete="off">
-                <button id="searchBtn" title="Execute Search" aria-label="Run web search">🔍</button>
+                <button type="button" id="searchBtn" title="Execute Search" aria-label="Run web search">🔍</button>
             </div>
+            <p class="search-hint">Typing filters below · Enter or 🔍 searches Google ↗</p>
         </div>
     </div>
 
@@ -507,8 +588,11 @@
         <div class="glass-panel">
             <div class="bubble-filters" id="bubbleFilters" role="group" aria-label="Filter by category">
                 <div class="bubble active" data-category="All">All Resources</div>
+                <div class="bubble" data-category="Saved" id="savedBubble">❤️ Saved</div>
             </div>
         </div>
+
+        <p class="results-meta" id="resultsMeta"></p>
 
         <div class="results-grid" id="resultsGrid">
         </div>
@@ -516,7 +600,7 @@
         <!-- Enhanced Empty State -->
         <div id="emptyState">
             <p>No local deals found in app for that item.</p>
-            <button class="action-btn empty-search-btn" id="emptySearchBtn">Search Nearest Stores 🔍</button>
+            <button type="button" class="action-btn empty-search-btn" id="emptySearchBtn">Search Google Instead 🔍</button>
         </div>
     </div>
 
@@ -1129,6 +1213,48 @@
 
         let activeCategory = 'All';
         let currentSearchMode = 'perks'; // 'perks' or 'needit'
+        const resultsMeta = document.getElementById('resultsMeta');
+        const savedBubble = document.getElementById('savedBubble');
+
+        // Favorites — persisted locally in the visitor's own browser only.
+        // Nothing is sent anywhere; this is just so a returning student
+        // doesn't lose their saved deals between visits.
+        const FAV_KEY = 'usfAdvantageFavorites';
+        let favorites = new Set();
+        try {
+            favorites = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+        } catch (e) {
+            favorites = new Set();
+        }
+
+        function saveFavorites() {
+            try {
+                localStorage.setItem(FAV_KEY, JSON.stringify([...favorites]));
+            } catch (e) { /* storage unavailable (e.g. private browsing) — fail silently */ }
+        }
+
+        function toggleFavorite(name) {
+            if (favorites.has(name)) {
+                favorites.delete(name);
+            } else {
+                favorites.add(name);
+            }
+            saveFavorites();
+            updateSavedBubbleLabel();
+            renderCards();
+        }
+
+        function updateSavedBubbleLabel() {
+            savedBubble.textContent = `❤️ Saved (${favorites.size})`;
+        }
+        updateSavedBubbleLabel();
+
+        savedBubble.addEventListener('click', () => {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
+            savedBubble.classList.add('active');
+            activeCategory = 'Saved';
+            renderCards();
+        });
 
         // Mode Toggle Buttons Logic
         modePerksBtn.addEventListener('click', () => {
@@ -1188,31 +1314,62 @@
         });
 
         // Smart Web Search Logic (Switches depending on active toggle mode)
+        // Guard against the same search firing twice in quick succession
+        // (e.g. a mobile keyboard's "Go" action plus our own keydown handler
+        // both reacting to the same Enter press) — this was the cause of a
+        // second, blank browser tab opening alongside the real results tab.
+        let lastSearchAt = 0;
+
         function executeSmartSearch() {
             const query = searchInput.value.trim();
             if (!query) return;
 
+            const now = Date.now();
+            if (now - lastSearchAt < 700) return; // swallow the duplicate fire
+            lastSearchAt = now;
+
             let fullQuery = "";
 
             if (currentSearchMode === 'perks') {
-                // "Find Deals" Parameter Formula
+                // "Find Deals" Parameter Formula — student-discount intent
                 const verification = '("University of South Florida students" OR "Student ID" OR "student discount")';
                 const geography = '(USF OR Tampa OR "Temple Terrace" OR "Fowler Ave")';
-                fullQuery = `${query} ${verification} ${geography}`;
+                fullQuery = `${query} ${verification} ${geography} -pinterest.com -reddit.com`;
             } else {
-                // "Need It Now" Local Maps/Proximity Formula (Triggers Maps Grid + Local Stores)
-                fullQuery = `${query} near "USF" Tampa FL in stock`;
+                // "Need It Now" Formula — tightened for local/in-stock retail
+                // results, while explicitly OR-ing in site:usf.edu so campus
+                // department pages (registrar, financial aid, ID center, etc.)
+                // still surface for admin-style queries like "need my transcripts".
+                // That department-lookup behavior users liked wasn't a fluke of
+                // loose matching — it's made a deliberate, permanent part of the
+                // formula here instead of an accidental side effect.
+                const local = '("near USF" OR "Tampa, FL" OR "Temple Terrace, FL")';
+                const official = '(site:usf.edu OR store OR location OR hours OR "in stock")';
+                fullQuery = `${query} ${local} ${official} -pinterest.com -reddit.com`;
             }
 
             const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(fullQuery)}`;
-            window.open(googleUrl, '_blank', 'noopener,noreferrer');
+
+            // Open via a temporary link click rather than window.open(url,'_blank',features).
+            // Combining a named target with a window-features string is handled
+            // inconsistently across browsers — some spawn an extra chromeless
+            // popup window in addition to the real tab. A synthetic anchor click
+            // reliably opens exactly one tab, with noopener/noreferrer for safety.
+            const link = document.createElement('a');
+            link.href = googleUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
         }
 
         searchBtn.addEventListener('click', executeSmartSearch);
         emptySearchBtn.addEventListener('click', executeSmartSearch);
-        
+
         searchInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
+                e.preventDefault(); // stop type="search"'s own native Enter behavior
                 executeSmartSearch();
             }
         });
@@ -1226,7 +1383,8 @@
             mLink.href = item.link;
             
             modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden';
+            closeModalBtn.focus();
         }
 
         // Render Local Directory filtering as user types
@@ -1234,45 +1392,89 @@
             const searchTerm = searchInput.value.toLowerCase();
             resultsGrid.innerHTML = '';
             let count = 0;
+            let index = 0;
 
             perksData.forEach(item => {
                 const matchesSearch = item.opportunity.toLowerCase().includes(searchTerm) || 
                                       item.how_to_get_it.toLowerCase().includes(searchTerm) ||
                                       item.category.toLowerCase().includes(searchTerm);
-                const matchesCategory = activeCategory === 'All' || item.category === activeCategory;
+                const matchesCategory = activeCategory === 'All'
+                    ? true
+                    : activeCategory === 'Saved'
+                        ? favorites.has(item.opportunity)
+                        : item.category === activeCategory;
 
                 if (matchesSearch && matchesCategory) {
                     count++;
+                    const isFree = /\bfree\b/i.test(item.cost) || /\$0(?!\d)/.test(item.cost);
+                    const isSaved = favorites.has(item.opportunity);
+                    const icon = iconMap[item.category] || '✨';
+
                     const card = document.createElement('div');
                     card.className = 'perk-card';
-                    
+                    card.style.animationDelay = `${Math.min(index * 30, 300)}ms`;
+                    card.setAttribute('role', 'button');
+                    card.setAttribute('tabindex', '0');
+                    card.setAttribute('aria-label', `${item.opportunity} — view details`);
+
                     card.innerHTML = `
                         <div class="card-header">
-                            <div class="category-tag">${item.category}</div>
-                            <h3 class="card-title">${item.opportunity}</h3>
+                            <div class="card-header-text">
+                                <div class="category-tag">${icon} ${item.category}</div>
+                                <h3 class="card-title">${item.opportunity}</h3>
+                            </div>
+                            <button type="button" class="fav-btn${isSaved ? ' saved' : ''}" aria-label="${isSaved ? 'Remove from saved' : 'Save this deal'}" aria-pressed="${isSaved}">${isSaved ? '❤️' : '🤍'}</button>
                         </div>
                         <div class="card-body">
                             <div class="info-row">
                                 <strong>Cost:</strong>
-                                <span class="highlight-text">${item.cost}</span>
+                                ${isFree ? `<span class="free-badge">${item.cost}</span>` : `<span class="highlight-text">${item.cost}</span>`}
                             </div>
                             <div class="info-row">
                                 <strong>Access:</strong>
                                 <span>${item.eligibility}</span>
                             </div>
                         </div>
-                        <div class="click-hint">Click for details & link ↗</div>
+                        <div class="click-hint">Tap for details & link ↗</div>
                     `;
                     
                     card.addEventListener('click', () => openModal(item));
-                    
+                    card.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openModal(item);
+                        }
+                    });
+
+                    const favBtn = card.querySelector('.fav-btn');
+                    favBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleFavorite(item.opportunity);
+                    });
+
                     resultsGrid.appendChild(card);
+                    index++;
                 }
             });
+
+            // Live results counter
+            if (count > 0) {
+                resultsMeta.textContent = searchTerm
+                    ? `${count} result${count === 1 ? '' : 's'} for "${searchInput.value.trim()}"`
+                    : activeCategory === 'Saved'
+                        ? `${count} saved resource${count === 1 ? '' : 's'}`
+                        : `${count} resource${count === 1 ? '' : 's'} available`;
+            } else {
+                resultsMeta.textContent = '';
+            }
 
             // Show Empty State with Web Search Button if nothing found locally
             if (count === 0) {
                 emptyState.style.display = 'block';
+                emptyState.querySelector('p').textContent = activeCategory === 'Saved'
+                    ? "You haven't saved anything yet — tap the 🤍 on any card to save it here."
+                    : "No local deals found in app for that item.";
+                emptySearchBtn.style.display = activeCategory === 'Saved' ? 'none' : 'inline-block';
             } else {
                 emptyState.style.display = 'none';
             }
